@@ -8,16 +8,7 @@ from nltk.stem import WordNetLemmatizer
 from bs4 import BeautifulSoup
 import nltk
 
-# Ensure required NLTK data is available
-try:
-    nltk.data.find("corpora/stopwords")
-except LookupError:
-    nltk.download("stopwords")
 
-try:
-    nltk.data.find("corpora/wordnet")
-except LookupError:
-    nltk.download("wordnet")
 
 app = FastAPI()
 
