@@ -56,8 +56,13 @@ The dataset consists of **real news** and **fake news** articles.
 ## OUTPUT
 "This News is Fake ⚠️☠️🚨"
 
-
 OR
 
-
 "This News is Real 😉"
+
+
+🚀 **Live Demo**  
+👉 [Try the App Here](https://news-qzod.onrender.com/docs)  
+
+
+
