@@ -8,16 +8,6 @@ from nltk.stem import WordNetLemmatizer
 from bs4 import BeautifulSoup
 import nltk
 
-# Ensure required NLTK data is available
-try:
-    nltk.data.find("corpora/stopwords")
-except LookupError:
-    nltk.download("stopwords")
-
-try:
-    nltk.data.find("corpora/wordnet")
-except LookupError:
-    nltk.download("wordnet")
 
 app = FastAPI()
 
@@ -45,13 +35,9 @@ def predict_re(item: BaseModelRequest):
         # remove special characters
         value = re.sub("[^a-zA-Z0-9 ]", "", value)
 
-        # remove stopwords
-        try:
-            sw = set(stopwords.words("english"))
-            value = " ".join([word for word in value.split() if word.lower() not in sw])
-        except LookupError:
-            return {"error": "NLTK stopwords not found. Please ensure stopwords are installed."}
-
+        sw = set(stopwords.words("english"))
+        value = " ".join([word for word in value.split() if word.lower() not in sw])
+        
         # remove HTML tags
         value = BeautifulSoup(value, "lxml").get_text()
 
@@ -65,12 +51,7 @@ def predict_re(item: BaseModelRequest):
         # remove extra spaces
         value = " ".join(value.split())
 
-        # apply lemmatization
-        try:
-            value = " ".join(WordNetLemmatizer().lemmatize(i) for i in value.split())
-        except LookupError:
-            return {"error": "NLTK wordnet not found. Please ensure wordnet is installed."}
-
+        
         # vectorize and predict
         vector_predict = vector.transform([value])
         model_predict_valuer = model.predict(vector_predict)
