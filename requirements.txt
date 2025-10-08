@@ -2,7 +2,7 @@ fastapi
 uvicorn
 gunicorn
 pydantic
-scikit-learn
+scikit-learn==1.6.0
 pandas
 nltk
 beautifulsoup4
