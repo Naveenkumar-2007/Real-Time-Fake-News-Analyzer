@@ -8,6 +8,13 @@ from nltk.stem import WordNetLemmatizer
 from bs4 import BeautifulSoup
 import nltk
 
+try:
+    nltk.data.find("corpora/stopwords")
+except LookupError:
+    nltk.download("stopwords")
+
+STOP_WORDS = set(stopwords.words("english"))
+
 
 app = FastAPI()
 
@@ -35,8 +42,9 @@ def predict_re(item: BaseModelRequest):
         # remove special characters
         value = re.sub("[^a-zA-Z0-9 ]", "", value)
 
-        sw = set(stopwords.words("english"))
-        value = " ".join([word for word in value.split() if word.lower() not in sw])
+        value = " ".join(
+            [word for word in value.split() if word.lower() not in STOP_WORDS]
+        )
         
         # remove HTML tags
         value = BeautifulSoup(value, "lxml").get_text()
@@ -59,7 +67,7 @@ def predict_re(item: BaseModelRequest):
         if model_predict_valuer == 0:
             return {"prediction": "This News is Fake ⚠️☠️🚨"}
         else:
-            return {"prediction": "This News is Real 😉"}
+            return {"prediction": "This News is Real "}
 
     except Exception as e:
         return {"error": str(e)}

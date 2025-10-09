@@ -65,4 +65,11 @@ OR
 👉 [Try the App Here](https://news-qzod.onrender.com/docs)  
 
 
+---
+
+## ⚙️ Deployment Notes
+
+- The API automatically downloads the NLTK `stopwords` corpus at startup if it isn't already available. Ensure the runtime has outbound internet access on first boot, or pre-package the corpus under `nltk_data/corpora/stopwords` to keep deployments fully offline.
+
+
 
